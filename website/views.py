@@ -5,7 +5,7 @@ from .models import Convidado, Convite, Imagen
 
 # Create your views here.
 def home(request):
-    Imagens = Imagen.objects.all()
+    imagens = Imagen.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
         #password = request.POST['password']
@@ -17,28 +17,28 @@ def home(request):
         else:
             return redirect('home')
     else:
-        return render(request, 'login.html', {'Imagens':Imagens})
+        return render(request, 'login.html', {'imagens':imagens})
 
 def index(request):
-    Imagens = Imagen.objects.all()
+    imagens = Imagen.objects.all()
     if request.user.is_authenticated:
         convites = Convite.objects.all()
         convidados = Convidado.objects.filter(convidado=request.user)
 
-        return render(request, 'index.html', {'convites':convites, 'convidados':convidados,'Imagens':Imagens})
+        return render(request, 'index.html', {'convites':convites, 'convidados':convidados,'imagens':imagens})
     else:
         return redirect('home')
 
 def profile(request):
-    Imagens = Imagen.objects.all()
+    imagens = Imagen.objects.all()
     if request.user.is_authenticated:
         convidado = Convidado.objects.filter(convidado=request.user)
-        return render(request, 'profile.html', {'convidado':convidado, 'Imagens':Imagens})
+        return render(request, 'profile.html', {'convidado':convidado, 'imagens':imagens})
     else:
         return redirect('home')
 
 def customer_profile(request):
-    Imagens = Imagen.objects.all()
+    imagens = Imagen.objects.all()
     if request.user.is_authenticated:
         convidado = Convidado.objects.filter(convidado=request.user)
         costumer_profi = Convidado.objects.get(convidado=request.user)
@@ -46,7 +46,7 @@ def customer_profile(request):
         if form.is_valid():
             form.save()
             return redirect('profile')
-        return render(request, 'profile_edit.html', {'form':form, 'convidado':convidado, 'Imagens':Imagens})
+        return render(request, 'profile_edit.html', {'form':form, 'convidado':convidado, 'imagens':imagens})
     else:
         return redirect('profile')
 
